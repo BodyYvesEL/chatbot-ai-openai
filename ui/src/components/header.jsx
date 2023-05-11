@@ -34,7 +34,7 @@ function Header() {
         <div className="flex h-20 items-center justify-between py-6">
           <div className="flex gap-6 md:gap-10">
             <a href="/" className="items-center space-x-2 md:flex mt-2 md:mt-0">
-              <span className="font-bold text-2xl sm:inline-block">QIQO</span>
+              <span className="font-bold text-2xl sm:inline-block text-orange-500">QIQO</span>
             </a>
             <nav className="invisible md:visible md:inline-flex gap-6 ml-6">
               <a
@@ -51,31 +51,35 @@ function Header() {
               </a>
             </nav>
           </div>
-          <nav className="invisible md:visible md:inline-flex gap-6">
+          <nav className="invisible md:visible md:inline-flex gap-5">
             <a
-              className="inline-flex items-center justify-center text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-4"
+              className="inline-flex items-center justify-center text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-4 w-40 text-center border-white"
               href="/login"
               style={{
                 marginLeft: '1rem',
                 backgroundColor: colorMode === 'light' ? 'black' : null,
                 color: colorMode === 'light' ? 'white' : null,
-                borderRadius: colorMode === 'light' ? '0.5rem' : null,
+                borderRadius: colorMode === 'light' ? '0.3rem' : null,
                 display: !authToken ? 'block' : 'none',
                 lineHeight: '2.1rem', // Adjust this value to match the height of the button
+                border: colorMode === 'light' ? '1px solid black': '1px solid white',
+                borderRadius: '0.3rem'
               }}
             >
               Login
             </a>
             <a
-              className="inline-flex items-center justify-center text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-4"
+              className="inline-flex items-center justify-center text-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 rounded-md px-4 w-40 text-center"
               href="/register"
               style={{
                 marginLeft: '1rem',
                 backgroundColor: colorMode === 'light' ? 'black' : null,
                 color: colorMode === 'light' ? 'white' : null,
-                borderRadius: colorMode === 'light' ? '0.5rem' : null,
+                borderRadius: colorMode === 'light' ? '0.3rem' : null,
                 display: !authToken ? 'block' : 'none',
                 lineHeight: '2.1rem', // Adjust this value to match the height of the button
+                border: colorMode === 'light' ? '1px solid black': '1px solid white',
+                borderRadius: '0.3rem'
               }}
             >
               Sign up
