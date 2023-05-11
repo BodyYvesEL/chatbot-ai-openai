@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Footer from './footer'
+
+
 const Dashboard2 = () => {
   const authToken = Cookies.get('token')
   const [subscriptionDetails, setSubscriptionDetails] = useState(null)

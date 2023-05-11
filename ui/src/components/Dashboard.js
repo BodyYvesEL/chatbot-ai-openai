@@ -66,7 +66,7 @@ function Dashboard() {
                       </span>
                       <input
                         placeholder="Search conversations..."
-                        className="w-full pr-2 border-0 p-0 focus:ring-0 caret-blue-700 placeholder:text-gray-400"
+                        className="w-full pr-2 border-0 p-0 focus:ring-0 caret-blue-700 placeholder:text-gray-400 rounded-md"
                         type="search"
                       />
                     </div>
