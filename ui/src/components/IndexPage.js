@@ -16,7 +16,7 @@ export default function IndexPage() {
                 <a
                   className="rounded-2xl bg-muted bg-gray-200 px-4 py-1.5 text-sm font-medium border border-gray-300 rounded-lg"
                   target="_blank"
-                  href="https://twitter.com/shadcn"
+                  href="https://twitter.com/QIQOaitech"
                   rel="noreferrer"
                 >
                   Follow along on <span className="text-blue-500">Twitter</span>
