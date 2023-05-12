@@ -116,8 +116,7 @@ export default function IndexPage() {
               </div>
               <div className="mx-auto text-center md:max-w-[58rem]">
                 <p className="leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-                  Taxonomy also includes a blog and a full-featured
-                  documentation site built using Contentlayer and MDX.
+                  See our documentation of more reference.
                 </p>
               </div>
             </section>
