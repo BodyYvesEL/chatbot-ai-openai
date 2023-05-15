@@ -1,3 +1,4 @@
+import React from 'react'
 import './App.css'
 import { useColorMode } from '@chakra-ui/react'
 import { useState } from 'react'
@@ -14,7 +15,10 @@ import { HamburgerIcon } from '@chakra-ui/icons'
 import Cookies from 'js-cookie'
 
 function Header() {
-  const authToken = Cookies.get('token')
+  const [authToken, setAuthToken] = useState(null)
+  React.useEffect(() => {
+    setAuthToken(Cookies.get('token'))
+  }, [])
 
   const { colorMode, toggleColorMode } = useColorMode()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -34,7 +38,9 @@ function Header() {
         <div className="flex h-20 items-center justify-between py-6">
           <div className="flex gap-6 md:gap-10">
             <a href="/" className="items-center space-x-2 md:flex mt-2 md:mt-0">
-              <span className="font-bold text-2xl sm:inline-block text-orange-500">QIQO</span>
+              <span className="font-bold text-2xl sm:inline-block text-orange-500">
+                QIQO
+              </span>
             </a>
             <nav className="invisible md:visible md:inline-flex gap-6 ml-6">
               <a
@@ -62,8 +68,9 @@ function Header() {
                 borderRadius: colorMode === 'light' ? '0.3rem' : null,
                 display: !authToken ? 'block' : 'none',
                 lineHeight: '2.1rem', // Adjust this value to match the height of the button
-                border: colorMode === 'light' ? '1px solid black': '1px solid white',
-                borderRadius: '0.3rem'
+                border:
+                  colorMode === 'light' ? '1px solid black' : '1px solid white',
+                borderRadius: '0.3rem',
               }}
             >
               Login
@@ -78,8 +85,9 @@ function Header() {
                 borderRadius: colorMode === 'light' ? '0.3rem' : null,
                 display: !authToken ? 'block' : 'none',
                 lineHeight: '2.1rem', // Adjust this value to match the height of the button
-                border: colorMode === 'light' ? '1px solid black': '1px solid white',
-                borderRadius: '0.3rem'
+                border:
+                  colorMode === 'light' ? '1px solid black' : '1px solid white',
+                borderRadius: '0.3rem',
               }}
             >
               Sign up

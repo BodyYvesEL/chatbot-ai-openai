@@ -100,7 +100,7 @@ function Settings() {
                       <div className="flex items-center gap-2">
                         <span className="flex flex-col leading-snug">
                           <span className="text-slate-500">
-                            puneetkathar1@gmail.com
+                            bodymoliki@gmail.com
                           </span>
                         </span>
                       </div>

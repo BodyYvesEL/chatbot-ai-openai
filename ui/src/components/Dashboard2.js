@@ -28,7 +28,6 @@ const Dashboard2 = () => {
   }, [authToken])
   if (!authToken) {
     router('/login')
-    return null
   }
 
   const handleLogout = () => {

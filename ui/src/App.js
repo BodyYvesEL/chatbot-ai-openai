@@ -12,6 +12,9 @@ import UpgradeSTANDARD from './components/UpgradeSTANDARD'
 import { FailurePage, SuccessPage } from './components/StripePaymentResponse'
 import Directories from './components/Directories'
 import Settings from './components/Settings'
+import DirectoryPage from './pages/IndexPage'
+import DirectoryPageSettings from './pages/Settings'
+import DirectoryPageNamespacePage from './pages/NamespacePage'
 
 function App() {
   return (
@@ -29,8 +32,14 @@ function App() {
             <Route path="/upgradeSTANDARD" element={<UpgradeSTANDARD />} />
             <Route path="/success" element={<SuccessPage />} />
             <Route path="/cancel" element={<FailurePage />} />
-            <Route path="directories" element={<Directories />} />
+            
             <Route path="settings" element={<Settings />} />
+            <Route path="/directories" element={<DirectoryPage />} />
+            <Route path="/directories/settings" element={<DirectoryPageSettings />} />
+            <Route
+              path="/directories/namespace/:namespace"
+              element={<DirectoryPageNamespacePage />}
+            />
           </Routes>
         </div>
       </Router>

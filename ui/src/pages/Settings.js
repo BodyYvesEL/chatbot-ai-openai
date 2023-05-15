@@ -143,7 +143,7 @@ const Settings = () => {
             className="text-gray-100 text-xl group-hover:text-blue-300  py-2 px-4"
             onClick={() => router('/directories')}
           >
-            Return to home
+            Return to dashboard
           </button>
         </div>
 
@@ -158,10 +158,10 @@ const Settings = () => {
         <p className="text-gray-300  text-center font-medium mt-6">
           Demo built by{' '}
           <a
-            href="https://github.com/dissorial"
+            href="https://github.com/BodyYvesEL"
             className="text-blue-400 hover:text-blue-500 transition-colors"
           >
-            dissorial
+            Body
           </a>
         </p>
         <div className="mt-8 flex justify-center ">

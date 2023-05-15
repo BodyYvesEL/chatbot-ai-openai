@@ -17,7 +17,7 @@ function Header2({ current }) {
   }
 
   return (
-    <nav className="w-full h-14 px-6 shrink-0 bg-slate-800 text-white flex items-center">
+    <nav className="z-100 w-full h-14 px-6 shrink-0 bg-slate-800 text-white flex items-center">
       <div className="flex-1 flex relative">
         <div className="visible md:invisible flex items-center -ml-4">
           <div
