@@ -311,7 +311,7 @@ app.post('/api/consume', async (req, res) => {
       fs.unlinkSync(`${filePath}/${file}`)
     })
 
-    res.status(200).json({ message: 'Data ingestion complete' })
+    res.status(200).json({ message: 'Your data ingestion is complete' })
   } catch (error) {
     console.error('Error ingesting documents', error)
     res.status(500).send('Internal Server Error')
