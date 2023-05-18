@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react'
 import Header2 from './Header2'
 import Cookies from 'js-cookie'
@@ -100,10 +101,11 @@ function Settings() {
                       <div className="flex items-center gap-2">
                         <span className="flex flex-col leading-snug">
                           <span className="text-slate-500">
-                            bodymoliki@gmail.com
+                          bodymoliki@gmail.com
                           </span>
                         </span>
                       </div>
+
                       <div className="mt-6 md:mt-0">
                         <span className="block md:hidden text-xs font-medium uppercase text-slate-500">
                           Plan ID
@@ -135,3 +137,6 @@ function Settings() {
 }
 
 export default Settings
+
+
+
