@@ -281,7 +281,7 @@ function Directories() {
                           className="flex-1 grid grid-cols-5 gap-2 py-2 items-center group"
                         >
                           <div className="col-span-4 md:col-span-2 line-clamp-2 leading-snug group-hover:text-blue-800">
-                            Puneet_Kathar_Resume.pdf
+                            body_Elvis_Resume.pdf
                           </div>
                           <div className="-ml-4">
                             <span className="px-4 py-1 rounded-full text-xs uppercase tracking-wide font-medium bg-green-50 text-green-700">
