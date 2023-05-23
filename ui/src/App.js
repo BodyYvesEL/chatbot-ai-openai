@@ -26,18 +26,16 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/pricing" element={<Pricing />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard2" element={<Dashboard2 />} />
             <Route path="/upgradePRO" element={<UpgradePRO />} />
             <Route path="/upgradeSTANDARD" element={<UpgradeSTANDARD />} />
             <Route path="/success" element={<SuccessPage />} />
             <Route path="/cancel" element={<FailurePage />} />
             
             <Route path="settings" element={<Settings />} />
-            <Route path="/directories" element={<DirectoryPage />} />
-            <Route path="/directories/settings" element={<DirectoryPageSettings />} />
+            <Route path="/dashboard" element={<DirectoryPage />} />
+            <Route path="/dashboard/settings" element={<DirectoryPageSettings />} />
             <Route
-              path="/directories/namespace/:namespace"
+              path="/dashboard/namespace/:namespace"
               element={<DirectoryPageNamespacePage />}
             />
           </Routes>

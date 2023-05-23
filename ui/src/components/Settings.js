@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 import Header2 from './Header2'
 import Cookies from 'js-cookie'
@@ -29,7 +28,7 @@ function Settings() {
     <div>
       <div id="app" data-v-app>
         <div className="flex flex-col h-screen">
-          <Header2 current={2} />
+          <Header2 />
           <div className="flex-1">
             <div className="flex w-full h-full">
               <div className="flex flex-col w-full">
@@ -50,7 +49,7 @@ function Settings() {
                       />
                     </svg>
                   </h2>
-                  <p className="leading-snug max-w-prose text-slate-600">
+                  <p className="leading-snug max-w-prose">
                     {subscriptionDetails ? (
                       <p>
                         You have an active subscription which is billed monthly.
@@ -94,21 +93,23 @@ function Settings() {
                     </div>
                     <div className="invisible md:visible my-2 md:grid grid-cols-3 border-y py-1">
                       <div> User </div>
-                      <div> Plan ID </div>
+                      <div> Plan </div>
                       <div> Status </div>
                     </div>
-                    <div className="grid md:grid-cols-3 border-b py-4 md:py-2 items-center text-slate-700">
+                    <div className="grid md:grid-cols-3 border-b py-4 md:py-2 items-center">
                       <div className="flex items-center gap-2">
                         <span className="flex flex-col leading-snug">
-                          <span className="text-slate-500">
-                          bodymoliki@gmail.com
+                          <span className="">
+                            {subscriptionDetails
+                              ? subscriptionDetails.email
+                              : null}
                           </span>
                         </span>
                       </div>
 
                       <div className="mt-6 md:mt-0">
-                        <span className="block md:hidden text-xs font-medium uppercase text-slate-500">
-                          Plan ID
+                        <span className="block md:hidden text-xs font-medium uppercase">
+                          Plan
                         </span>
                         <span>
                           {subscriptionDetails
@@ -117,10 +118,10 @@ function Settings() {
                         </span>
                       </div>
                       <div className="mt-3 md:mt-0">
-                        <span className="block md:hidden text-xs font-medium uppercase text-slate-500">
+                        <span className="block md:hidden text-xs font-medium uppercase">
                           Status
                         </span>{' '}
-                        {subscriptionDetails
+                        {subscriptionDetails && subscriptionDetails.status
                           ? subscriptionDetails.status.toUpperCase()
                           : null}
                       </div>
@@ -137,6 +138,3 @@ function Settings() {
 }
 
 export default Settings
-
-
-

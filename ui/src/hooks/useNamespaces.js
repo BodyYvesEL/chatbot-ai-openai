@@ -31,5 +31,10 @@ export default function useNamespaces() {
     }
   }
 
-  return { namespaces, selectedNamespace, setSelectedNamespace, namespaceSource }
+  return {
+    namespaces,
+    selectedNamespace,
+    setSelectedNamespace,
+    namespaceSource,
+  }
 }

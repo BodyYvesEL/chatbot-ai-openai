@@ -15,7 +15,7 @@ export const NamespaceList = ({
     <>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <h2 className="text-gray-100 mb-4">Your namespaces</h2>
+          <h2 className="text-gray-100 mb-4 font-bold">Choose Document</h2>
           <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-700">
             {selectedNamespace}
             <ChevronDownIcon
@@ -38,7 +38,7 @@ export const NamespaceList = ({
             <div className="py-1">
               {namespaces.map((namespace) => (
                 <Menu.Item key={namespace}>
-                  <Link to={`/directories/namespace/${namespace}`} key={namespace}>
+                  <Link to={`/dashboard/namespace/${namespace}`} key={namespace}>
                     <button
                       className={`block px-4 py-2 text-sm w-full ${
                         namespace === selectedNamespace

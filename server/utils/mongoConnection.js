@@ -1,15 +1,14 @@
-
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 const connection = {};
 
 async function connectDb() {
-  if (connection.isConnected) {
-    // Use existing database connection
-    console.log('Using existing connection');
-    return;
-  }
+  // if (connection.isConnected) {
+  //   // Use existing database connection
+  //   console.log('Using existing connection');
+  //   return;
+  // }
 
   // Create new database connection
   try {
@@ -26,5 +25,3 @@ async function connectDb() {
 }
 
 module.exports = connectDb;
-
-

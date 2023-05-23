@@ -1,5 +1,5 @@
-import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid';
-
+import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/solid'
+import Swal from 'sweetalert2'
 
 const ChatList = (props) => {
   const {
@@ -11,27 +11,27 @@ const ChatList = (props) => {
     createChat,
     updateChatName,
     deleteChat,
-  } = props;
+  } = props
 
   return (
     <li>
-      <div className="border p-2 rounded-md flex gap-2 items-center mb-10 bg-gray-800 hover:bg-gray-700">
+      <div className="border border-white p-2 rounded-md flex gap-2 items-center mb-10 bg-gray-800 hover:bg-gray-700">
         <PlusIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
         <button
-          className="w-full text-left transition-colors text-gray-200"
+          className="w-full text-left transition-colors text-gray-200 "
           onClick={async () => {
-            const newChatId = await createChat();
-            setChatId(newChatId);
-            setSelectedChatId(newChatId);
+            const newChatId = await createChat()
+            setChatId(newChatId)
+            setSelectedChatId(newChatId)
           }}
         >
-          New chat
+          Create new chat
         </button>
       </div>
 
       <ul role="list" className="space-y-1">
-        <p className="text-md font-semibold text-gray-200 leading-6">
-          Your chats
+        <p className="text-md text-gray-200 leading-6 font-bold">
+          Chat History
         </p>
         {chatList.map((chatId, index) => (
           <li
@@ -42,8 +42,8 @@ const ChatList = (props) => {
                 : 'bg-none text-gray-200 hover:bg-gray-700'
             }`}
             onClick={() => {
-              setChatId(chatId);
-              setSelectedChatId(chatId);
+              setChatId(chatId)
+              setSelectedChatId(chatId)
             }}
           >
             <p>{chatNames[chatId] || `Chat ${index}`}</p>
@@ -53,13 +53,19 @@ const ChatList = (props) => {
                 <button
                   className="text-gray-300 hover:text-gray-400 ml-2"
                   onClick={(e) => {
-                    e.stopPropagation();
-                    const newChatName = prompt(
-                      'Enter a new name for this chat:',
-                    );
-                    if (newChatName) {
-                      updateChatName(chatId, newChatName);
-                    }
+                    e.stopPropagation()
+
+                    Swal.fire({
+                      title: 'Enter a new name for this chat:',
+                      input: 'text',
+                      showCancelButton: true,
+                      confirmButtonText: 'Update',
+                      cancelButtonText: 'Cancel',
+                    }).then((result) => {
+                      if (result.isConfirmed && result.value) {
+                        updateChatName(chatId, result.value)
+                      }
+                    })
                   }}
                 >
                   <PencilIcon className="h-4 w-4" />
@@ -68,8 +74,8 @@ const ChatList = (props) => {
                 <button
                   className="text-red-500 hover:text-red-600 ml-2"
                   onClick={(e) => {
-                    e.stopPropagation();
-                    deleteChat(chatId);
+                    e.stopPropagation()
+                    deleteChat(chatId)
                   }}
                 >
                   <TrashIcon className="h-4 w-4" />
@@ -80,7 +86,7 @@ const ChatList = (props) => {
         ))}
       </ul>
     </li>
-  );
-};
+  )
+}
 
-export default ChatList;
+export default ChatList

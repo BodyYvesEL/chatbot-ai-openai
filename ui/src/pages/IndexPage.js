@@ -10,7 +10,17 @@ import { useCallback } from 'react'
 import { ArrowLongRightIcon } from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router-dom'
 import Header2 from '../components/Header2'
-
+import { useColorModeValue } from '@chakra-ui/react'
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
+import DashboardSettings from './Settings'
 import Cookies from 'js-cookie'
 export default function Home({ initialNamespace }) {
   const router = useNavigate()
@@ -22,7 +32,7 @@ export default function Home({ initialNamespace }) {
     namespaces,
     selectedNamespace,
     setSelectedNamespace,
-    namespaceSource
+    namespaceSource,
   } = useNamespaces()
 
   const {
@@ -50,7 +60,16 @@ export default function Home({ initialNamespace }) {
   })
 
   const { messages, history } = messageState
+  const [isModalOpen, setModalOpen] = useState(false)
 
+  const [email, setEmail] = useState(null)
+  const openModal = () => {
+    setModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setModalOpen(false)
+  }
   // console.log(chatList);
 
   const messageListRef = useRef(null)
@@ -67,7 +86,7 @@ export default function Home({ initialNamespace }) {
           },
         },
       )
-      const data = await response.json()
+      const { messages: data, email: userEmail } = await response.json()
       setMessageState((state) => ({
         ...state,
         messages: data.map((message) => ({
@@ -75,6 +94,7 @@ export default function Home({ initialNamespace }) {
           message: message.content,
         })),
       }))
+      setEmail(userEmail)
     } catch (error) {
       console.error('Failed to fetch chat history:', error)
     }
@@ -131,6 +151,7 @@ export default function Home({ initialNamespace }) {
 
     try {
       const authToken = await Cookies.get('token')
+
       const response = await fetch('http://localhost:5000/api/chat', {
         method: 'POST',
         headers: {
@@ -144,30 +165,59 @@ export default function Home({ initialNamespace }) {
           selectedNamespace,
         }),
       })
+
       const data = await response.json()
       console.log('data', data)
 
       if (data.error) {
         setError(data.error)
       } else {
+        const messageWords = data.text.split(' ')
+        let currentIndex = 0
+        let currentMessage = ''
+
         setMessageState((state) => ({
           ...state,
           messages: [
             ...state.messages,
             {
               type: 'apiMessage',
-              message: data.text,
+              message: '', // Empty message as a placeholder for the typing effect
               sourceDocs: data.sourceDocuments,
             },
           ],
-          history: [...state.history, [question, data.text]],
         }))
+        console.log(data)
+
+        const interval = setInterval(() => {
+          currentMessage += messageWords[currentIndex] + ' '
+
+          setMessageState((state) => {
+            const updatedMessages = [...state.messages]
+            const lastMessageIndex = updatedMessages.length - 1
+            updatedMessages[lastMessageIndex] = {
+              ...updatedMessages[lastMessageIndex],
+              message: currentMessage,
+            }
+            return {
+              ...state,
+              messages: updatedMessages,
+            }
+          })
+
+          currentIndex++
+
+          if (currentIndex >= messageWords.length) {
+            clearInterval(interval)
+          }
+        }, 200) // Adjust the typing speed by changing the interval duration
       }
+
       console.log('messageState', messageState)
 
       setLoading(false)
 
-      messageListRef.current?.scrollTo(0, messageListRef.current.scrollHeight)
+      messageListRef.current?.scrollTo(0, messageListRef.current?.scrollHeight)
     } catch (error) {
       setLoading(false)
       console.error('Error fetching data:', error)
@@ -187,17 +237,11 @@ export default function Home({ initialNamespace }) {
   }
 
   console.log(messages.length)
-
-
-
+  const textColor = useColorModeValue('gray.200', 'white')
   return (
     <>
-      <Header2 current={1} />
-      <div
-        className={`flex bg-gray-900 pb-40 ${
-          !nameSpaceHasChats ? 'h-screen' : ''
-        }`}
-      >
+      <Header2 />
+      <div className={`flex pb-40 ${!nameSpaceHasChats ? 'h-screen' : ''}`}>
         <button
           type="button"
           className="fixed z-50 top-14 left-2 lg:hidden"
@@ -220,15 +264,20 @@ export default function Home({ initialNamespace }) {
           </svg>
         </button>
         <div
-          className={`z-1 fixed top-12 left-0 w-1/2 md:w-1/6 h-screen flex flex-col gap-y-5 overflow-y-auto bg-gray-800 px-6 ${
+          className={`z-1 fixed top-14 left-0 w-1/2 md:w-1/6 h-screen flex flex-col gap-y-5 overflow-y-auto px-6 ${
             !showDrawer ? 'invisible md:visible' : ''
-          }`}
+          } bg-gray-800 `}
           id="responsive"
         >
-          <div className="flex h-16 shrink-0 items-center"></div>
+          <div className="flex h-4 shrink-0 items-center"></div>
 
           <nav className="flex flex-1 flex-col">
-            <ul role="list" className="flex flex-1 flex-col gap-y-12">
+            <ul role="list" className="flex flex-1 flex-col gap-y-6">
+              <NamespaceList
+                namespaces={namespaces}
+                selectedNamespace={selectedNamespace}
+                setSelectedNamespace={setSelectedNamespace}
+              />
               <ChatList
                 chatList={chatList}
                 chatNames={chatNames}
@@ -239,34 +288,35 @@ export default function Home({ initialNamespace }) {
                 updateChatName={updateChatName}
                 deleteChat={deleteChat}
               />
-              <NamespaceList
-                namespaces={namespaces}
-                selectedNamespace={selectedNamespace}
-                setSelectedNamespace={setSelectedNamespace}
-              />
             </ul>
           </nav>
           <button
             type="button"
-            className="rounded-md bg-indigo-900 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mb-12"
-            onClick={() => router('/directories/settings')}
+            className="rounded-md bg-indigo-900 text-md text-gray-200 leading-6 font-bold  px-3.5 py-2.5 text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mb-40"
+            onClick={openModal}
           >
-            Settings
+            Manage Documents
           </button>
+          <div className="-mt-20 mb-20 text-gray-400 text-sm text-center p-2 outline-dashed outline-2 outline-offset-2">
+            {email}
+          </div>
         </div>
         <main className="py-10 w-full h-full md:pl-72">
-          <div className="px-4 sm:px-6 lg:px-8 h-full flex flex-col">
+          <div className={`px-4 sm:px-6 lg:px-8 h-full flex flex-col`}>
             {nameSpaceHasChats ? (
               <>
                 {messages.length === 0 ? (
-                  <h2 className="text-2xl mb-3 text-center text-gray-200 font-bold tracking-wide">
+                  <h2
+                    className={`text-2xl mb-3 text-center font-bold tracking-wide ${textColor}`}
+                  >
                     Nothing to show here yet
                   </h2>
                 ) : (
-                  <h2 className="text-2xl mb-3 text-center text-gray-200 font-bold tracking-wide">
-                    Chat topic{'  '}
-                    <ArrowLongRightIcon className="inline-block h-6 w-6 mx-2 text-gray-200" />
-                    {'  '}
+                  <h2
+                    className={`text-2xl mb-3 text-center font-bold tracking-wide ${textColor}`}
+                  >
+                    Chat topic{' '}
+                    <ArrowLongRightIcon className="inline-block h-6 w-6 mx-2" />
                     {chatNames[selectedChatId] || 'Untitled Chat'}
                   </h2>
                 )}
@@ -282,7 +332,7 @@ export default function Home({ initialNamespace }) {
                     messageListRef={messageListRef}
                   />
                   <div className="flex items-center justify-center mx-auto">
-                    <div className="fixed bottom-0 md:left-1/2 transform md:-translate-x-1/3 w-[90%] md:w-3/6 pb-6 md:pr-6">
+                    <div className="fixed bottom-0 transform  w-[95%] md:w-[75%] pb-6 md:pr-6">
                       <ChatForm
                         loading={loading}
                         error={error}
@@ -299,13 +349,26 @@ export default function Home({ initialNamespace }) {
                 </div>
               </>
             ) : (
-              <div className="flex flex-col items-center justify-center h-screen ">
-                <h1 className="text-5xl font-bold text-gray-100">Welcome</h1>
-                <p className="text-2xl text-gray-100 mt-4">
+              <div className="flex flex-col items-center justify-center h-screen">
+                <h1 className={`text-5xl font-bold ${textColor}`}>Welcome</h1>
+                <p className={`text-2xl mt-4 ${textColor}`}>
                   Get started by creating a chat for this topic in the sidebar.
                 </p>
               </div>
             )}
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Upload a document</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <DashboardSettings />
+                </ModalBody>
+                <ModalFooter>
+                  <button onClick={closeModal}>Close</button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </div>
         </main>
       </div>

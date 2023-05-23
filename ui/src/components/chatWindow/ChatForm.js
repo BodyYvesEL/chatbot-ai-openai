@@ -3,6 +3,8 @@ import LoadingDots from '../other/LoadingDots'
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid'
 import { saveAs } from 'file-saver'
 import jsPDF from 'jspdf'
+import { useColorModeValue } from '@chakra-ui/react'
+
 const ChatForm = ({
   loading,
   error,
@@ -91,11 +93,14 @@ const ChatForm = ({
             }
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="flex-1 border bg-gray-800 shadow-xl border-gray-500 rounded-md p-4 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent resize-none h-[80px]"
+            className={`flex-1 border  ${useColorModeValue(
+              'bg-gray-200',
+              'bg-gray-800',
+            )} shadow-xl rounded-2xl border-gray-500 p-4 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-transparent resize-none h-[80px]`}
           />
 
           <button
-            className="bg-teal-900 shadow-xl border hover:bg-teal-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-teal-900 focus:border-transparent"
+            className="bg-teal-900 shadow-xl border hover:bg-teal-800 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-teal-900 focus:border-transparent"
             onClick={(e) => {
               e.preventDefault()
               toggleDropdown()
@@ -117,7 +122,13 @@ const ChatForm = ({
             </svg>
           </button>
           {isOpen && (
-            <div className="absolute right-0 -mt-10 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div
+              onMouseLeave={(e) => {
+                e.preventDefault()
+                setIsOpen(false)
+              }}
+              className="absolute right-0 -mt-10 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+            >
               <div className="py-1">
                 <button
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
@@ -153,7 +164,7 @@ const ChatForm = ({
           <button
             type="submit"
             disabled={loading}
-            className="bg-teal-900 shadow-xl border hover:bg-teal-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-teal-900 focus:border-transparent"
+            className="bg-teal-900 shadow-xl border hover:bg-teal-800 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-teal-900 focus:border-transparent"
           >
             {loading ? (
               <div>

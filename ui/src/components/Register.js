@@ -36,22 +36,19 @@ export default function Register() {
       data.password.length > 2
     ) {
       setDisabled(true)
-      const res = await fetch(
-        `http://localhost:5000/api/signup`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            fName: data.fName,
-            lName: data.lName,
-            email: data.email,
-            password: data.password,
-            companyName: data.companyName,
-          }),
+      const res = await fetch(`http://localhost:5000/api/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      )
+        body: JSON.stringify({
+          fName: data.fName,
+          lName: data.lName,
+          email: data.email,
+          password: data.password,
+          companyName: data.companyName,
+        }),
+      })
 
       const res2 = await res.json()
       console.log(res2)
@@ -66,19 +63,16 @@ export default function Register() {
           confirmButtonText: 'Submit',
           showLoaderOnConfirm: true,
           preConfirm: (otp) => {
-            return fetch(
-              `http://localhost:5000/api/verify`,
-              {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  otp,
-                  email: data.email,
-                }),
+            return fetch(`http://localhost:5000/api/verify`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
               },
-            )
+              body: JSON.stringify({
+                otp,
+                email: data.email,
+              }),
+            })
               .then((response) => response.json())
               .then((res) => {
                 console.log(res)
@@ -118,8 +112,7 @@ export default function Register() {
       <div>
         <div className="min-h-screen">
           <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
-            
-          <a
+            <a
               href="/"
               className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4 absolute left-4 top-4 md:left-8 md:top-8"
             >
@@ -139,7 +132,7 @@ export default function Register() {
               </svg>
               Back
             </a>
-            
+
             <a
               href="/login"
               className="inline-flex items-center justify-center rounded-mg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4 absolute right-4 top-4 md:right-8 md:top-8"
@@ -257,7 +250,7 @@ export default function Register() {
                         disabled={disabled}
                         className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
                       >
-                        {disabled ? 'Loading...' :  'Get OTP'}
+                        {disabled ? 'Loading...' : 'Get OTP'}
                       </button>
                     </div>
                   </form>

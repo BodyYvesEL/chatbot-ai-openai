@@ -1,31 +1,42 @@
-
-import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import React, { useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
 
 function MessageList({ messages, loading, messageListRef }) {
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
+  function scrollToBottom() {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    })
+  }
+
   return (
     <div className="flex-grow flex-shrink-0 overflow-y-auto">
       <div ref={messageListRef} className="flex flex-col gap-4 p-4">
         {messages.map((message, index) => {
-          let className;
+          let className
           if (message.type === 'apiMessage') {
-            className = 'bg-blue-900 text-gray-200 self-end';
+            className =
+              'bg-blue-900 text-white self-start rounded-br-3xl rounded-tr-3xl rounded-tl-xl'
           } else {
             className =
               loading && index === messages.length - 1
-                ? 'bg-gray-800 text-gray-400 self-start'
-                : 'bg-gray-700 text-gray-200 self-start';
+                ? 'bg-gray-300 text-gray-800 self-end rounded-bl-3xl rounded-tl-3xl rounded-tr-xl pb-30'
+                : 'bg-gray-200 text-gray-800 self-end rounded-bl-3xl rounded-tl-3xl rounded-tr-xl'
           }
           return (
             <div
               key={`chatMessage-${index}`}
-              className={`rounded-md py-2 px-4 shadow-md max-w-2xl ${className}`}
+              className={`py-2 px-4 shadow-md max-w-2xl ${className}`}
             >
               <ReactMarkdown linkTarget="_blank">
                 {message.message}
               </ReactMarkdown>
             </div>
-          );
+          )
         })}
       </div>
       <style jsx>
@@ -44,10 +55,23 @@ function MessageList({ messages, loading, messageListRef }) {
             background-color: rgba(107, 114, 128, 0.45);
             border-radius: 9999px;
           }
+
+          /* Adjust colors for light mode */
+          @media (prefers-color-scheme: light) {
+            .bg-blue-900 {
+              background-color: #3182ce;
+            }
+            .bg-gray-300 {
+              background-color: #e2e8f0;
+            }
+            .bg-gray-200 {
+              background-color: #edf2f7;
+            }
+          }
         `}
       </style>
     </div>
-  );
+  )
 }
 
-export default MessageList;
+export default MessageList

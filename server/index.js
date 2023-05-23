@@ -13,6 +13,8 @@ const connectDB = require('./utils/mongoConnection')
 const { RecursiveCharacterTextSplitter } = require('langchain/text_splitter')
 const { DirectoryLoader } = require('langchain/document_loaders/fs/directory')
 const fs = require('fs')
+const util = require('util')
+const stat = util.promisify(fs.stat)
 const { Document } = require('langchain/document')
 const { readFile } = require('fs/promises')
 const { BaseDocumentLoader } = require('langchain/document_loaders')
@@ -148,29 +150,34 @@ Answer in markdown:`
 })
 
 app.get('/api/getChats', async (req, res) => {
-  const { namespace } = req.body
-  console.log(req.body)
+  const namespace = req.query.namespace
   // Get the authorization header from the request
   const authHeader = req.headers['authorization']
 
   // Extract the token from the authorization header
   const token = authHeader && authHeader.split(' ')[1]
-  console.log(token)
   // Verify the token to get the payload (which contains the email)
   const payload = jwt.verify(token, process.env.JWT_SECRET)
   const userEmail = payload.email
-  console.log(userEmail, namespace)
 
   try {
     await connectDB()
     const userChats = await ChatModel.find({ userEmail, namespace })
     const chatIds = userChats.map((chat) => chat.chatId)
-    console.log(userChats)
-    console.log(chatIds)
-    res.status(200).json(chatIds)
+
+    // Fetch chat names for the user's chats
+    const chatNames = {}
+    for (const chatId of chatIds) {
+      const chat = await ChatModel.findOne({ chatId, namespace })
+      if (chat) {
+        chatNames[chatId] = chat.chatName // Assuming 'chatName' is the field storing the chat name
+      }
+    }
+
+    res.status(200).json({ chatIds, chatNames })
   } catch (error) {
     console.log('error', error)
-    res.status(500).json({ message: 'Failed to get namespaces' })
+    res.status(500).json({ message: 'Failed to get chat data' })
   }
 })
 
@@ -322,19 +329,15 @@ app.post('/api/create-chat', async (req, res) => {
   try {
     await connectDB()
 
-    const { chatId, namespace } = req.body
-    // Get the authorization header from the request
+    const { chatId, chatName, namespace } = req.body
     const authHeader = req.headers['authorization']
-
-    // Extract the token from the authorization header
     const token = authHeader && authHeader.split(' ')[1]
-
-    // Verify the token to get the payload (which contains the email)
     const payload = jwt.verify(token, process.env.JWT_SECRET)
     const userEmail = payload.email
 
     const newChat = new ChatModel({
       chatId,
+      chatName,
       namespace,
       userEmail,
     })
@@ -376,6 +379,24 @@ app.delete('/api/delete-chat', async (req, res) => {
   } catch (error) {
     console.error('Error deleting chat:', error)
     res.status(500).send('Internal server error')
+  }
+})
+
+app.put('/api/update-chat/:chatId', async (req, res) => {
+  const { chatId } = req.params
+  const { chatName } = req.body
+
+  try {
+    await connectDB()
+    const updatedChat = await ChatModel.findOneAndUpdate(
+      { chatId },
+      { chatName },
+      { new: true },
+    )
+    res.status(200).json(updatedChat)
+  } catch (error) {
+    console.log('error', error)
+    res.status(500).json({ message: 'Failed to update chat name' })
   }
 })
 
@@ -481,7 +502,7 @@ app.get('/api/history', async (req, res) => {
     })
 
     // Send the messages as a response
-    res.status(200).json(messages)
+    res.status(200).json({ messages, email: userEmail })
   } catch (error) {
     console.log('error', error)
     res.status(500).json({ error: error.message || 'Something went wrong' })
@@ -505,6 +526,38 @@ app.post('/api/upload', (req, res) => {
       if (!file || file.length === 0) {
         continue
       }
+      // Get the authorization header from the request
+      const authHeader = req.headers['authorization']
+
+      // Extract the token from the authorization header
+      const token = authHeader && authHeader.split(' ')[1]
+
+      // Verify the token to get the payload (which contains the email)
+      const payload = jwt.verify(token, process.env.JWT_SECRET)
+
+      //Get Subscription Details
+      // Use the email to retrieve the customer's subscription
+      const customer = await stripe.customers.list({
+        email: payload.email,
+        limit: 1,
+      })
+
+      const subscriptions = await stripe.subscriptions.list({
+        customer: customer.data[0].id,
+        limit: 1,
+      })
+
+      const subscription = await subscriptions.data[0]
+      const planId = await subscription?.plan?.id
+      var limit = 5
+      var file_size = 10 //MB
+      if (planId === process.env.STANDARD_PLAN) {
+        limit = 10
+        file_size = 100
+      } else if (planId === process.env.PRO_PLAN) {
+        limit = 20
+        file_size = 200
+      }
 
       const uploadedFile = file[0]
       const oldPath = uploadedFile.path
@@ -513,6 +566,25 @@ app.post('/api/upload', (req, res) => {
         'docs',
         uploadedFile.originalFilename,
       )
+
+      const fileSizeMB = getFileSizeMB(oldPath)
+      if (fileSizeMB > file_size) {
+        console.log(fileSizeMB)
+        fs.unlinkSync(oldPath)
+        return res.status(400).json({
+          error:
+            'File size exceeds the limit.  <a style="color: lightblue; text-decoration: underline;" href="http://localhost:3000/pricing">Upgrade</a> for more!',
+        })
+      }
+
+      const count = await Namespace.countDocuments({ userEmail: payload.email })
+      if (count >= limit) {
+        console.error('Limit Reached! Upgrade for more.')
+        return res.status(400).json({
+          error:
+            'Limit Reached! <a style="color: blue; text-decoration: underline;" href="http://localhost:3000/pricing">Upgrade</a> for more.',
+        })
+      }
 
       // Use fs.copyFileSync to copy the file to the destination directory
       fs.copyFileSync(oldPath, newPath)
@@ -533,6 +605,10 @@ app.post('/api/upload', (req, res) => {
   })
 })
 
+function getFileSizeMB(filePath) {
+  const fileStats = fs.statSync(filePath)
+  return fileStats.size / (1024 * 1024) // Convert to MB
+}
 // Define your API routes
 app.post('/api/signup', async (req, res) => {
   const { fName, lName, email, password, companyName } = req.body
@@ -727,8 +803,8 @@ app.post('/api/createCheckoutSession', async (req, res) => {
         },
       ],
       mode: 'subscription',
-      success_url: `https://localhost:3000/dashboard`,
-      cancel_url: `https://chatbot-ui-two-omega-67.vercel.app/cancel`,
+      success_url: `http://localhost:3000/dashboard`,
+      cancel_url: `http://localhost:3000/cancel`,
     })
 
     // Return the session ID to the client
@@ -757,7 +833,13 @@ app.get('/api/getSubscription', async (req, res) => {
       limit: 1,
     })
     if (customer.data.length === 0) {
-      res.status(404).send(`No customer found with email ${payload.email}`)
+      const response = {
+        status: 'Unpaid',
+        planId: 'Free Plan',
+        email: payload.email,
+      }
+      console.log(response)
+      res.send(response)
       return
     }
 
@@ -766,19 +848,27 @@ app.get('/api/getSubscription', async (req, res) => {
       limit: 1,
     })
     if (subscriptions.data.length === 0) {
-      res
-        .status(404)
-        .send(
-          `No active subscriptions found for customer with email ${payload.email}`,
-        )
+      console.log(payload.email)
+      const response = {
+        status: 'Unpaid',
+        planId: 'Free Plan',
+        email: payload.email,
+      }
+      console.log(response)
+      res.send(response)
       return
     }
 
     const subscription = subscriptions.data[0]
     const response = {
       status: subscription.status,
-      planId: subscription.plan.id,
+      planId:
+        subscription.plan.id == process.env.STANDARD_PLAN
+          ? 'Standard Plan'
+          : 'Pro Plan',
+      email: payload.email,
     }
+    console.log(response)
     res.send(response)
   } catch (error) {
     console.error('Error while getting subscription:', error.message)

@@ -75,6 +75,16 @@ const Settings = () => {
     }
   }
 
+  const handleDrop = (event) => {
+    event.preventDefault()
+    const droppedFiles = event.dataTransfer.files
+    setSelectedFiles(droppedFiles)
+  }
+
+  const handleDragOver = (event) => {
+    event.preventDefault()
+  }
+
   const handleUpload = async () => {
     if (!selectedFiles || selectedFiles.length === 0) return
 
@@ -121,7 +131,7 @@ const Settings = () => {
       if (response.ok) {
         const data = await response.json()
         setMessage(data.message)
-        router('/directories')
+        router('/dashboard')
       } else {
         const errorData = await response.json()
         setError(errorData.error)
@@ -134,38 +144,16 @@ const Settings = () => {
   }
   return (
     <>
-      <Header2 current={1} />
-      <div className="mx-auto min-h-screen px-4 sm:px-6 lg:px-8 py-20 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700">
-        <div className="flex w-full justify-center mb-14 align-center items-center group ">
-          <ArrowLongLeftIcon className="h-8 w-8 text-white group-hover:text-blue-300 p-1" />
-          <button
-            type="button"
-            className="text-gray-100 text-xl group-hover:text-blue-300  py-2 px-4"
-            onClick={() => router('/directories')}
-          >
-            Return to dashboard
-          </button>
-        </div>
-
-        <h2 className="text-center">
-          <span className="text-5xl font-bold text-white">
-            Create a namespace
-          </span>
-        </h2>
-        <p className="text-center text-gray-300 mt-6 text-xl">
-          Start by selecting a file or multiple files to upload.
+      <div className="mx-auto h-[25rem] overflow-y-auto px-4 sm:px-6 lg:px-8">
+        <p className="text-center mt-6 text-xl">
+          Start by selecting a file or drag and drop the file to upload.
         </p>
-        <p className="text-gray-300  text-center font-medium mt-6">
-          Demo built by{' '}
-          <a
-            href="https://github.com/BodyYvesEL"
-            className="text-blue-400 hover:text-blue-500 transition-colors"
-          >
-            Body
-          </a>
-        </p>
-        <div className="mt-8 flex justify-center ">
-          <label className="w-1/3 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue hover:bg-blue hover:text-blue-900 cursor-pointer">
+        <div
+          className="mt-8 flex justify-center "
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+        >
+          <label className="w-full h-[10rem] flex flex-col items-center px-4 py-12 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-dashed border-blue hover:bg-blue hover:text-blue-900 cursor-pointer">
             <svg
               className="w-8 h-8"
               fill="currentColor"
@@ -208,8 +196,8 @@ const Settings = () => {
 
         {message && (
           <div className="mt-4">
-            <label className="text-center text-xl mt-10 block text-gray-300 font-bold mb-2">
-              Topic name
+            <label className="text-center text-xl mt-10 block  font-bold mb-2">
+              Document name
             </label>
             <div className="flex flex-col w-[200px] mx-auto justify-center gap-4">
               <input
@@ -230,10 +218,17 @@ const Settings = () => {
           </div>
         )}
 
-        {loading && (
-          <p className="mt-8 text-center text-gray-300">Loading...</p>
+        {loading && <p className="mt-8 text-center ">Loading...</p>}
+        {error && (
+          <p className="mt-8 text-center text-red-500">
+            {error.includes('Upgrade') ? (
+              <span dangerouslySetInnerHTML={{ __html: error }} />
+            ) : (
+              error
+            )}
+          </p>
         )}
-        {error && <p className="mt-8 text-center text-red-500">{error}</p>}
+
         {message && (
           <p className="mt-8 text-center text-xl text-bold text-green-500">
             {message}
@@ -242,8 +237,8 @@ const Settings = () => {
 
         <div className="mt-8 max-w-xl mx-auto">
           {namespaces.length > 0 && (
-            <h2 className="mb-2 mt-12 text-center text-3xl font-bold text-white">
-              Your namespaces
+            <h2 className="mb-2 mt-12 text-center text-3xl font-bold">
+              Your Documents
             </h2>
           )}
 
@@ -255,7 +250,7 @@ const Settings = () => {
               >
                 <div className="min-w-0">
                   <div className="flex items-start gap-x-3">
-                    <p className="text-md font-semibold leading-6 text-gray-300">
+                    <p className="text-md font-semibold leading-6 ">
                       {namespace}
                     </p>
                   </div>
