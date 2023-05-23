@@ -13,7 +13,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStripe = async () => {
       const stripe = await loadStripe(
-        'pk_test_51JBOh0SHwvTbY5SOcIIqNGssVnkYFiMEcTSX9g162wppopTVMB2AQUtiQqB4coQMq3HYgsdZo5EzQdm2eove55I500YMLWfwEj',
+        'pk_test_51MlBRCFJwKeowJ2dBZEQ6CsIxuOV8BNmUpppAL6sVBKSh9bZdoBl7sJBn0yAzJplJYLVbV5pd4MrzOH1agbTa5Dj00NO0xFdJy',
       )
       setStripe(stripe)
     }
@@ -46,7 +46,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header2 />
       <div className="flex-grow container mx-auto px-4 py-8">
         <div className="max-w-lg mx-auto">
@@ -208,7 +208,7 @@ const Dashboard = () => {
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
               onClick={() =>
-                createSubscription('price_1MOlDNSHwvTbY5SOqCTM24we')
+                createSubscription('price_1N7y2wFJwKeowJ2dNlKfFf7b')
               }
             >
               Continue to SUBSCRIBE
