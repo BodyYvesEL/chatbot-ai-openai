@@ -57,7 +57,7 @@ export default function IndexPage() {
                     <div className="space-y-2">
                       <h3 className="font-bold text-orange-500">Business Questions</h3>
                       <p className="text-sm text-muted-foreground">
-                        No more need to navigate through countless documents. Have instant information about your business. The future of 
+                        No more need to navigate through countless documents. Have instant information about your business using fine-tuned chatbot.
                       </p>
                     </div>
                   </div>
@@ -65,9 +65,9 @@ export default function IndexPage() {
                 <div className="relative overflow-hidden rounded-lg border bg-background p-2">
                   <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
                     <div className="space-y-2">
-                      <h3 className="font-bold text-orange-500">React 18</h3>
+                      <h3 className="font-bold text-orange-500">Personal Questions</h3>
                       <p className="text-sm">
-                        Server and Client Components. Use hook.
+                        Whether you are a student, researcher or entrepreneur, our AI chatbot is built to handle large document files.
                       </p>
                     </div>
                   </div>
@@ -77,7 +77,7 @@ export default function IndexPage() {
                     <div className="space-y-2">
                       <h3 className="font-bold text-orange-500">Database</h3>
                       <p className="text-sm text-muted-foreground">
-                        ORM using Prisma and deployed on PlanetScale.
+                        Your information and data is confidential with us. That is why we are using state-of-art server services for a speedy and reliable QA process.
                       </p>
                     </div>
                   </div>
@@ -85,10 +85,9 @@ export default function IndexPage() {
                 <div className="relative overflow-hidden rounded-lg border bg-background p-2">
                   <div className="flex h-[180px] flex-col justify-between rounded-md p-6">
                     <div className="space-y-2">
-                      <h3 className="font-bold text-orange-500">Components</h3>
+                      <h3 className="font-bold text-orange-500">Technology</h3>
                       <p className="text-sm text-muted-foreground">
-                        UI components built using Radix UI and styled with
-                        Tailwind CSS.
+                        Our cutting-edge technology stack is a forerunner using LLMs to provide QA best for conversational purposes.
                       </p>
                     </div>
                   </div>
@@ -98,7 +97,7 @@ export default function IndexPage() {
                     <div className="space-y-2">
                       <h3 className="font-bold text-orange-500">Authentication</h3>
                       <p className="text-sm text-muted-foreground">
-                        Authentication using NextAuth.js and middlewares.
+                        2FA as an extra layer to secure your information and data. Confidently explore our product after receiving your OTP.
                       </p>
                     </div>
                   </div>
@@ -108,7 +107,7 @@ export default function IndexPage() {
                     <div className="space-y-2">
                       <h3 className="font-bold text-orange-500">Subscriptions</h3>
                       <p className="text-sm text-muted-foreground">
-                        Free and paid subscriptions using Stripe.
+                        Free and paid subscriptions using Stripe. Upgrade to your personal needs.
                       </p>
                     </div>
                   </div>

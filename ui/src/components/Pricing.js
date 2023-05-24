@@ -336,7 +336,7 @@ function Pricing() {
                     >
                       <polyline points="20 6 9 17 4 12" />
                     </svg>{' '}
-                    Monthly Tokens: <span class="font-bold text-orange-500">1200</span>
+                    Monthly Tokens: <span class="font-bold text-orange-500">12000</span>
                   </li>
 
                 </ul>

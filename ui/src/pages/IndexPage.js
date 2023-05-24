@@ -309,7 +309,7 @@ export default function Home({ initialNamespace }) {
                   <h2
                     className={`text-2xl mb-3 text-center font-bold tracking-wide ${textColor}`}
                   >
-                    Nothing to show here yet
+                    Give you bot a name and start prompting...
                   </h2>
                 ) : (
                   <h2
@@ -350,9 +350,9 @@ export default function Home({ initialNamespace }) {
               </>
             ) : (
               <div className="flex flex-col items-center justify-center h-screen">
-                <h1 className={`text-5xl font-bold ${textColor}`}>Welcome</h1>
-                <p className={`text-2xl mt-4 ${textColor}`}>
-                  Get started by creating a chat for this topic in the sidebar.
+                <h1 className={`text-2xl font-semibold ${textColor}`}>Welcome</h1>
+                <p className={`text-sm mt-4 ${textColor} border border-solid border-gray-500 rounded-lg p-4`}>
+                  Go to the sidebar...start by managing your documents and create a chat.
                 </p>
               </div>
             )}
