@@ -1,21 +1,29 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const ChatSchema = new mongoose.Schema(
-    {
-        chatId: {
-            type: String,
-            required: true,
-        },
-        namespace: {
-            type: String,
-            required: true,
-        },
+  {
+    chatId: {
+      type: String,
+      required: true,
     },
-    { timestamps: true }
+    namespace: {
+      type: String,
+      required: true,
+    },
+    userEmail: {
+      type: String,
+      required: true,
+    },
+    chatName: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true },
 );
 
 const ChatModel = mongoose.models.Chat
-    ? mongoose.model("Chat")
-    : mongoose.model("Chat", ChatSchema);
+  ? mongoose.model('Chat')
+  : mongoose.model('Chat', ChatSchema);
 
 module.exports = ChatModel;

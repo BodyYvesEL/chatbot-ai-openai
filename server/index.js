@@ -535,22 +535,27 @@ app.post('/api/upload', (req, res) => {
       // Verify the token to get the payload (which contains the email)
       const payload = jwt.verify(token, process.env.JWT_SECRET)
 
-      //Get Subscription Details
       // Use the email to retrieve the customer's subscription
       const customer = await stripe.customers.list({
         email: payload.email,
         limit: 1,
       })
 
-      const subscriptions = await stripe.subscriptions.list({
-        customer: customer.data[0].id,
-        limit: 1,
-      })
+      const customerData = customer.data
+      var planId
+      if (customerData && customerData.length > 0) {
+        const customerId = customerData[0].id
 
-      const subscription = await subscriptions.data[0]
-      const planId = await subscription?.plan?.id
-      var limit = 5
-      var file_size = 10 //MB
+        const subscriptions = await stripe.subscriptions.list({
+          customer: customerId,
+          limit: 1,
+        })
+
+        const subscription = subscriptions.data[0]
+        planId = subscription?.plan?.id
+      }
+      let limit = 5
+      let file_size = 10 //MB
       if (planId === process.env.STANDARD_PLAN) {
         limit = 10
         file_size = 100
@@ -573,7 +578,7 @@ app.post('/api/upload', (req, res) => {
         fs.unlinkSync(oldPath)
         return res.status(400).json({
           error:
-            'File size exceeds the limit.  <a style="color: lightblue; text-decoration: underline;" href="http://localhost:3000/pricing">Upgrade</a> for more!',
+            'File size exceeds the limit.  <a style="color: lightblue; text-decoration: underline;" href="https://chatbot-ui-two-omega-67.vercel.app/pricing">Upgrade</a> for more!',
         })
       }
 
@@ -582,7 +587,7 @@ app.post('/api/upload', (req, res) => {
         console.error('Limit Reached! Upgrade for more.')
         return res.status(400).json({
           error:
-            'Limit Reached! <a style="color: blue; text-decoration: underline;" href="http://localhost:3000/pricing">Upgrade</a> for more.',
+            'Limit Reached! <a style="color: blue; text-decoration: underline;" href="https://chatbot-ui-two-omega-67.vercel.app/pricing">Upgrade</a> for more.',
         })
       }
 
@@ -803,8 +808,8 @@ app.post('/api/createCheckoutSession', async (req, res) => {
         },
       ],
       mode: 'subscription',
-      success_url: `http://localhost:3000/dashboard`,
-      cancel_url: `http://localhost:3000/cancel`,
+      success_url: `https://chatbot-ui-two-omega-67.vercel.app/dashboard`,
+      cancel_url: `https://chatbot-ui-two-omega-67.vercel.app/cancel`,
     })
 
     // Return the session ID to the client
