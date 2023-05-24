@@ -100,7 +100,7 @@ const ChatForm = ({
           />
 
           <button
-            className="bg-teal-900 shadow-xl border hover:bg-teal-800 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-teal-900 focus:border-transparent"
+            className="bg-teal-900 shadow-xl border hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-teal-900 focus:border-transparent"
             onClick={(e) => {
               e.preventDefault()
               toggleDropdown()
@@ -164,11 +164,11 @@ const ChatForm = ({
           <button
             type="submit"
             disabled={loading}
-            className="bg-teal-900 shadow-xl border hover:bg-teal-800 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-teal-900 focus:border-transparent"
+            className="bg-teal-900 shadow-xl border hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-teal-900 focus:border-transparent"
           >
             {loading ? (
               <div>
-                <LoadingDots color="#ffffff" />
+                <LoadingDots color="#ff7900" />
               </div>
             ) : (
               <PaperAirplaneIcon className="h-6 w-6" />

@@ -145,8 +145,8 @@ const Settings = () => {
   return (
     <>
       <div className="mx-auto h-[25rem] overflow-y-auto px-4 sm:px-6 lg:px-8">
-        <p className="text-center mt-6 text-xl">
-          Start by selecting a file or drag and drop the file to upload.
+        <p className="text-center mt-6 text-xl border border-solid border-gray-500 rounded-lg p-4">
+          Select or drag a file in for upload
         </p>
         <div
           className="mt-8 flex justify-center "
@@ -196,7 +196,7 @@ const Settings = () => {
 
         {message && (
           <div className="mt-4">
-            <label className="text-center text-xl mt-10 block  font-bold mb-2">
+            <label className="text-center text-xl mt-10 block  font-semibold mb-2">
               Document name
             </label>
             <div className="flex flex-col w-[200px] mx-auto justify-center gap-4">
@@ -237,8 +237,8 @@ const Settings = () => {
 
         <div className="mt-8 max-w-xl mx-auto">
           {namespaces.length > 0 && (
-            <h2 className="mb-2 mt-12 text-center text-3xl font-bold">
-              Your Documents
+            <h2 className="mb-2 mt-12 text-center text-2xl font-semibold">
+              Your Uploaded Documents
             </h2>
           )}
 
@@ -257,7 +257,7 @@ const Settings = () => {
                 </div>
                 <div className="flex flex-none items-center gap-x-4">
                   <button
-                    className=" rounded-md bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-inset ring-gray-300 hover:bg-red-700 sm:block"
+                    className=" rounded-lg bg-red-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm ring-inset ring-gray-300 hover:bg-red-700 sm:block"
                     onClick={() => handleDelete(namespace)}
                   >
                     Delete

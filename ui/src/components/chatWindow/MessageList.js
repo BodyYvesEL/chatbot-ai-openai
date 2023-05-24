@@ -59,7 +59,7 @@ function MessageList({ messages, loading, messageListRef }) {
           /* Adjust colors for light mode */
           @media (prefers-color-scheme: light) {
             .bg-blue-900 {
-              background-color: #3182ce;
+              background-color: #004d40;
             }
             .bg-gray-300 {
               background-color: #e2e8f0;

@@ -53,8 +53,8 @@ function Header2({ current }) {
           <a
             className={
               current === 0
-                ? `px-4 py-2 font-medium rounded-md flex gap-2 ${chatTextColor} bg-slate-900`
-                : `px-4 py-2 font-medium rounded-md flex gap-2 ${chatTextColor} hover:text-slate-50 hover:bg-slate-700`
+                ? `px-4 py-2 font-medium rounded-lg flex gap-2 ${chatTextColor} bg-slate-900`
+                : `px-4 py-2 font-medium rounded-lg flex gap-2 ${chatTextColor} hover:text-slate-50 hover:bg-orange-500`
             }
             href="/dashboard"
           >
@@ -63,8 +63,8 @@ function Header2({ current }) {
           <a
             className={
               current === 2
-                ? `px-4 py-2 font-medium rounded-md flex gap-2 ${settingsTextColor} bg-slate-900`
-                : `px-4 py-2 font-medium rounded-md flex gap-2 ${settingsTextColor} hover:text-slate-50 hover:bg-slate-700`
+                ? `px-4 py-2 font-medium rounded-lg flex gap-2 ${settingsTextColor} bg-slate-900`
+                : `px-4 py-2 font-medium rounded-lg flex gap-2 ${settingsTextColor} hover:text-slate-50 hover:bg-orange-500`
             }
             href="/settings"
           >

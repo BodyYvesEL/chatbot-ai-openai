@@ -15,7 +15,7 @@ const ChatList = (props) => {
 
   return (
     <li>
-      <div className="border border-white p-2 rounded-md flex gap-2 items-center mb-10 bg-gray-800 hover:bg-gray-700">
+      <div className="border border-white p-2 rounded-lg flex gap-2 items-center mb-10 bg-gray-800 hover:bg-orange-500">
         <PlusIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
         <button
           className="w-full text-left transition-colors text-gray-200 "
@@ -30,7 +30,7 @@ const ChatList = (props) => {
       </div>
 
       <ul role="list" className="space-y-1">
-        <p className="text-md text-gray-200 leading-6 font-bold">
+        <p className="text-md text-gray-200 leading-6 font-semibold">
           Chat History
         </p>
         {chatList.map((chatId, index) => (
@@ -39,7 +39,7 @@ const ChatList = (props) => {
             className={`my-2 p-2 rounded-lg cursor-pointer pl-4 flex flex-grow text-left transition-colors ${
               chatId === selectedChatId
                 ? 'bg-gray-700 text-white'
-                : 'bg-none text-gray-200 hover:bg-gray-700'
+                : 'bg-none text-gray-200 hover:bg-orange-500'
             }`}
             onClick={() => {
               setChatId(chatId)
@@ -68,7 +68,7 @@ const ChatList = (props) => {
                     })
                   }}
                 >
-                  <PencilIcon className="h-4 w-4" />
+                  <PencilIcon className="h-4 w-4" style={{ color: 'green' }} />
                 </button>
 
                 <button

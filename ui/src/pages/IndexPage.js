@@ -292,7 +292,7 @@ export default function Home({ initialNamespace }) {
           </nav>
           <button
             type="button"
-            className="rounded-md bg-indigo-900 text-md text-gray-200 leading-6 font-bold  px-3.5 py-2.5 text-white shadow-sm hover:bg-indigo-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mb-40"
+            className="rounded-lg bg-indigo-900 text-md text-gray-200 leading-6 font-semibold  px-3.5 py-2.5 text-white border border-solid border-gray-500 shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 mb-40"
             onClick={openModal}
           >
             Manage Documents
@@ -307,13 +307,13 @@ export default function Home({ initialNamespace }) {
               <>
                 {messages.length === 0 ? (
                   <h2
-                    className={`text-2xl mb-3 text-center font-bold tracking-wide ${textColor}`}
+                    className={`text-2xl mb-3 text-center font-semibold tracking-wide ${textColor}`}
                   >
-                    Give you bot a name and start prompting...
+                    Give your bot a name and start prompting...
                   </h2>
                 ) : (
                   <h2
-                    className={`text-2xl mb-3 text-center font-bold tracking-wide ${textColor}`}
+                    className={`text-2xl mb-3 text-center font-semibold tracking-wide ${textColor}`}
                   >
                     Chat topic{' '}
                     <ArrowLongRightIcon className="inline-block h-6 w-6 mx-2" />

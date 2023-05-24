@@ -15,8 +15,8 @@ export const NamespaceList = ({
     <>
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <h2 className="text-gray-100 mb-4 font-bold">Choose Document</h2>
-          <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-700">
+          <h2 className="text-gray-100 mb-4 font-semibold">Choose Document</h2>
+          <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-lg bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-orange-500">
             {selectedNamespace}
             <ChevronDownIcon
               className="-mr-1 h-5 w-5 text-gray-400"
