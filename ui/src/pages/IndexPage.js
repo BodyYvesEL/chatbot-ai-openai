@@ -315,7 +315,7 @@ export default function Home({ initialNamespace }) {
                   <h2
                     className={`text-2xl mb-3 text-center font-semibold tracking-wide ${textColor}`}
                   >
-                    Chat topic{' '}
+                    Chat Topic{' '}
                     <ArrowLongRightIcon className="inline-block h-6 w-6 mx-2" />
                     {chatNames[selectedChatId] || 'Untitled Chat'}
                   </h2>

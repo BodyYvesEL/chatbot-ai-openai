@@ -61,6 +61,7 @@ const ChatList = (props) => {
                       showCancelButton: true,
                       confirmButtonText: 'Update',
                       cancelButtonText: 'Cancel',
+  
                     }).then((result) => {
                       if (result.isConfirmed && result.value) {
                         updateChatName(chatId, result.value)

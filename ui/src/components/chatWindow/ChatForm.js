@@ -129,7 +129,7 @@ const ChatForm = ({
               }}
               className="absolute right-0 -mt-10 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
             >
-              <div className="py-1">
+              <div className="py-1 border border-solid border-orange-500 rounded-lg">
                 <button
                   className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   onClick={(e) => {
