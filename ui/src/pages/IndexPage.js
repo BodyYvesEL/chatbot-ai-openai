@@ -79,7 +79,7 @@ export default function Home({ initialNamespace }) {
     try {
       const authToken = await Cookies.get('token')
       const response = await fetch(
-        `http://localhost:5000/api/history?chatId=${chatId}`,
+        `http://localhost:5001/api/history?chatId=${chatId}`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
@@ -152,7 +152,7 @@ export default function Home({ initialNamespace }) {
     try {
       const authToken = await Cookies.get('token')
 
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch('http://localhost:5001/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

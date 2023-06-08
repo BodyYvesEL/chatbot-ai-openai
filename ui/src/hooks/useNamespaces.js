@@ -12,7 +12,7 @@ export default function useNamespaces() {
   const fetchNamespaces = async () => {
     try {
       const authToken = await Cookies.get('token')
-      const response = await fetch('http://localhost:5000/api/getNamespaces', {
+      const response = await fetch('http://localhost:5001/api/getNamespaces', {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

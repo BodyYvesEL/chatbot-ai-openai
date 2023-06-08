@@ -10,7 +10,7 @@ function Settings() {
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       const response = await fetch(
-        'http://localhost:5000/api/getSubscription',
+        'http://localhost:5001/api/getSubscription',
         {
           headers: {
             Authorization: `Bearer ${authToken}`,

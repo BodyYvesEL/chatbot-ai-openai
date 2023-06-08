@@ -108,6 +108,7 @@ If you don't know the answer, say that you don't know. Do not make up answers.
 Question: {question}
 Answer in markdown:`
 
+/*
     const model = new OpenAI({
       temperature: 0,
       modelName: 'gpt-3.5-turbo',
@@ -148,6 +149,70 @@ Answer in markdown:`
     res.status(500).json({ error: error.message || 'Something went wrong' })
   }
 })
+
+*/
+
+const model = new OpenAI({
+  temperature: 0,
+  modelName: 'gpt-3.5-turbo',
+})
+
+const chain = ConversationalRetrievalQAChain.fromLLM(
+  model,
+  vectorStore.asRetriever(),
+  {
+    qaTemplate: QA_PROMPT,
+    questionGeneratorTemplate: CONDENSE_PROMPT,
+    returnSourceDocuments: true, // Set returnSourceDocuments to true
+  },
+)
+
+const response = await chain.call({
+  question: sanitizedQuestion,
+  chat_history: history || [],
+
+})
+
+console.log('response', response)
+
+const botMessage = new Message({
+  sender: 'bot',
+  content: response.text.toString(),
+  chatId: chatId,
+  namespace: selectedNamespace,
+  userEmail: userEmail,
+})
+
+await botMessage.save()
+
+const sourceDocuments = response.sourceDocuments || [] // Retrieve the source documents
+
+// Create a formatted reference string
+const references = sourceDocuments.map((document, index) => {
+  const source = document.source || '';
+  const page = document.page || '';
+  return `Source: ${source}, Page: ${page}`;
+});
+
+// Add the references to the response
+const responseWithReferences = {
+  text: response.text,
+  references: references,
+};
+
+res
+  .status(200)
+  .json(responseWithReferences);
+} catch (error) {
+  console.log('Error:', error);
+  res.status(500).json({ error: error.message || 'Something went wrong' });
+}
+});
+
+
+
+
+
 
 app.get('/api/getChats', async (req, res) => {
   const namespace = req.query.namespace
@@ -881,6 +946,8 @@ app.get('/api/getSubscription', async (req, res) => {
   }
 })
 
-app.listen(5000, () => {
-  console.log('Server is running on port 5000')
-})
+
+
+app.listen(5001, () => {
+  console.log('Server is running on port 5001')
+});

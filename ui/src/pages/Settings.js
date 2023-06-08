@@ -21,7 +21,7 @@ const Settings = () => {
       const authToken = await Cookies.get('token')
       if (authToken && authToken.length > 0) {
         const response = await fetch(
-          'http://localhost:5000/api/getNamespaces',
+          'http://localhost:5001/api/getNamespaces',
           {
             headers: {
               Authorization: `Bearer ${authToken}`,
@@ -45,7 +45,7 @@ const Settings = () => {
     try {
       const authToken = await Cookies.get('token')
       const response = await fetch(
-        `http://localhost:5000/api/deleteNamespace?namespace=${namespace}`,
+        `http://localhost:5001/api/deleteNamespace?namespace=${namespace}`,
         {
           method: 'DELETE',
           headers: {
@@ -95,7 +95,7 @@ const Settings = () => {
 
     try {
       const authToken = await Cookies.get('token')
-      const response = await fetch('http://localhost:5000/api/upload', {
+      const response = await fetch('http://localhost:5001/api/upload', {
         method: 'POST',
         body: formData,
         headers: {
@@ -119,7 +119,7 @@ const Settings = () => {
       setLoading(true)
       const authToken = await Cookies.get('token')
       const response = await fetch(
-        `http://localhost:5000/api/consume?namespaceName=${namespaceName}`,
+        `http://localhost:5001/api/consume?namespaceName=${namespaceName}`,
         {
           method: 'POST',
           headers: {

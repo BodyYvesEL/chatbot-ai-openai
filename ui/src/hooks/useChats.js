@@ -13,7 +13,7 @@ export function useChats(namespace) {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          'http://localhost:5000/api/getChats', // Update the API endpoint to fetch chat data
+          'http://localhost:5001/api/getChats', // Update the API endpoint to fetch chat data
           {
             headers: {
               Authorization: `Bearer ${await Cookies.get('token')}`,
@@ -41,7 +41,7 @@ export function useChats(namespace) {
 
     axios
       .put(
-        `http://localhost:5000/api/update-chat/${chatId}`,
+        `http://localhost:5001/api/update-chat/${chatId}`,
         { chatName: newChatName }, // Include 'chatName' field in the request body
         {
           headers: {
@@ -64,7 +64,7 @@ export function useChats(namespace) {
     try {
       // Create chat in MongoDB
       await axios.post(
-        'http://localhost:5000/api/create-chat', // Update the API endpoint to create chat data
+        'http://localhost:5001/api/create-chat', // Update the API endpoint to create chat data
         {
           chatId: newChatId,
           chatName: 'Untitled', // Add an empty chatName field
@@ -93,7 +93,7 @@ export function useChats(namespace) {
     try {
       // Delete chat from MongoDB
       await axios.delete(
-        'http://localhost:5000/api/delete-chat', // Update the API endpoint to delete chat data
+        'http://localhost:5001/api/delete-chat', // Update the API endpoint to delete chat data
         {
           headers: {
             Authorization: `Bearer ${await Cookies.get('token')}`,

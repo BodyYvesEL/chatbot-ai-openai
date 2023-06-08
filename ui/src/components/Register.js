@@ -36,7 +36,7 @@ export default function Register() {
       data.password.length > 2
     ) {
       setDisabled(true)
-      const res = await fetch(`http://localhost:5000/api/signup`, {
+      const res = await fetch(`http://localhost:5001/api/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ export default function Register() {
           confirmButtonText: 'Submit',
           showLoaderOnConfirm: true,
           preConfirm: (otp) => {
-            return fetch(`http://localhost:5000/api/verify`, {
+            return fetch(`http://localhost:5001/api/verify`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
