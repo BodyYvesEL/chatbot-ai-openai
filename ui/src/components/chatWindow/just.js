@@ -1,31 +1,31 @@
-import React, { useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
+import React, { useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
 
 function MessageList({ messages, loading, messageListRef }) {
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    scrollToBottom()
+  }, [messages])
 
   function scrollToBottom() {
     window.scrollTo({
       top: document.documentElement.scrollHeight,
       behavior: 'smooth',
-    });
+    })
   }
 
   return (
     <div className="flex-grow flex-shrink-0 overflow-y-auto">
       <div ref={messageListRef} className="flex flex-col gap-4 p-4">
         {messages.map((message, index) => {
-          let className;
+          let className
           if (message.type === 'apiMessage') {
             className =
-              'bg-blue-900 text-white self-start rounded-br-3xl rounded-tr-3xl rounded-tl-xl';
+              'bg-blue-900 text-white self-start rounded-br-3xl rounded-tr-3xl rounded-tl-xl'
           } else {
             className =
               loading && index === messages.length - 1
                 ? 'bg-gray-300 text-gray-800 self-end rounded-bl-3xl rounded-tl-3xl rounded-tr-xl pb-30'
-                : 'bg-gray-200 text-gray-800 self-end rounded-bl-3xl rounded-tl-3xl rounded-tr-xl';
+                : 'bg-gray-200 text-gray-800 self-end rounded-bl-3xl rounded-tl-3xl rounded-tr-xl'
           }
           return (
             <div
@@ -35,13 +35,8 @@ function MessageList({ messages, loading, messageListRef }) {
               <ReactMarkdown linkTarget="_blank">
                 {message.message}
               </ReactMarkdown>
-              {message.sourcePage && (
-                <div className="text-sm text-gray-500 mt-2">
-                  Source Page: {message.sourcePage}
-                </div>
-              )}
             </div>
-          );
+          )
         })}
       </div>
       <style jsx>
@@ -76,9 +71,7 @@ function MessageList({ messages, loading, messageListRef }) {
         `}
       </style>
     </div>
-  );
+  )
 }
 
-export default MessageList;
-
-
+export default MessageList
